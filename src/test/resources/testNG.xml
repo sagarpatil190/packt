@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="E2E Test">
+    <test name="Cross Browser Testing - CHROME">
+        <parameter name="BrowserName" value="CHROME"/>
+        <classes>
+            <class name="packtpub.automation.runner.TestRunner"/>
+        </classes>
+    </test> <!-- Test -->
+
+    <test name="Cross Browser Testing - FIREFOX">
+        <parameter name="BrowserName" value="FIREFOX"/>
+        <classes>
+            <class name="packtpub.automation.runner.TestRunner"/>
+        </classes>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->
