@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class ObjectManager {
     private WebDriver driver;
     private HashMap<String, String> ObjectsRepo;
-    private final String ObjectsRepoFilePath = getClass().getClassLoader().getResource("ObejctRepository.loc").getPath();
+    private final String ObjectsRepoFilePath = getClass().getClassLoader().getResource("ObjectRepository.loc").getPath();
 
     public ObjectManager(WebDriver driver) {
         this.driver = driver;
