@@ -1,1 +1,6 @@
 locatorName:locatorType=locatorValue
+HomePage_Browse_Menu:xpath=//*[@id='nav-browse']/span
+HomePage_Browse_Menu_Categories:xpath=//*[@id='nav-browse']/ul/li
+HomePage_Browse_Menu_Category:xpath=//*[@id='nav-browse']/ul/li[%s]/a
+HomePage_Browse_Menu_Products:xpath=//*[@id='nav-browse']/ul/li//ul/li
+Validate_Category_Text:xpath=//span[@class='badge badge-secondary']

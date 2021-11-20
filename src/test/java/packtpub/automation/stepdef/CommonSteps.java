@@ -1,5 +1,6 @@
 package packtpub.automation.stepdef;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -21,6 +22,12 @@ public class CommonSteps {
         } catch (Exception e) {
             Assert.fail("Failed to initialize test:", e.fillInStackTrace());
         }
+    }
+
+    @Given("^User navigates to the \"([^\"]*)\"$")
+    public void userNavigatesToThe(String url) throws Throwable {
+        driver.navigate().to(url);
+
     }
 
 

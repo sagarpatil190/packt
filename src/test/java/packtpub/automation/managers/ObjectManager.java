@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 //object manager class for managing the objects
 public class ObjectManager {
@@ -42,11 +43,11 @@ public class ObjectManager {
         }
     }
 
-    public WebElement getElement(String objectName){
+    public WebElement getElement(String objectName, String... arg){
         String locatorType = null, locatorValue = null;
         try {
             locatorType = ObjectsRepo.get(objectName).split("=", 2)[0].toUpperCase();
-            locatorValue = ObjectsRepo.get(objectName).split("=", 2)[1];
+            locatorValue = String.format(ObjectsRepo.get(objectName).split("=", 2)[1],arg);
         } catch (Exception e) {
             throw new RuntimeException("Locators are not in expected format- [LocatorName]:[LocatorType]=[LocatorValue] or either it is not added in object repository.");
         }
@@ -54,6 +55,21 @@ public class ObjectManager {
         wait.until(ExpectedConditions.presenceOfElementLocated(by(locatorType,locatorValue)));
         return driver.findElement(by(locatorType,locatorValue));
     }
+
+    public List<WebElement> getElements(String objectName, String ... arg){
+        String locatorType = null, locatorValue = null;
+        try {
+            locatorType = ObjectsRepo.get(objectName).split("=", 2)[0].toUpperCase();
+            locatorValue = String.format(ObjectsRepo.get(objectName).split("=", 2)[1],arg);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Locators are not in expected format- [LocatorName]:[LocatorType]=[LocatorValue] or either it is not added in object repository.");
+        }
+        WebDriverWait wait=new WebDriverWait(driver, 60);
+        wait.until(ExpectedConditions.presenceOfElementLocated(by(locatorType,locatorValue)));
+        return driver.findElements(by(locatorType,locatorValue));
+    }
+
 
     private By by(String locatorType,String locatorValue){
         switch (locatorType){
