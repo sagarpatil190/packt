@@ -1,7 +1,13 @@
 package packtpub.automation.stepdef;
 
+import com.cucumber.listener.Reporter;
+import cucumber.api.DataTable;
+import cucumber.api.PendingException;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import gherkin.lexer.Th;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -12,6 +18,8 @@ import java.util.List;
 public class AutomationTestingExercise {
     TestContext testContext;
     WebDriver driver;
+
+    List<WebElement> carousels;
 
     public AutomationTestingExercise(TestContext context) {
         testContext = context;
@@ -52,5 +60,83 @@ public class AutomationTestingExercise {
         }
 
         }
+
+    @When("^User clicks on titles in the carousel below the main title inside \"([^\"]*)\" section\\.$")
+    public void userClicksOnTitlesInTheCarouselBelowTheMainTitleInsideYourSuggestedTitlesSection(String page) {
+         carousels = testContext.getObjectManager().getElements("HomePage_Carousel_Title_Text");
     }
+
+    @Then("^User should be able to see carousel title in main title\\.$")
+    public void userShouldBeAbleToSeeCarouselTitleInMainTitle() {
+        for (WebElement carousel:carousels) {
+            String expectedTitle = carousel.getText();
+            carousel.click();
+            String actualMainTitle = testContext.getObjectManager().getElement("HomePage_Main_Title_Text").getText();
+            if(!actualMainTitle.equalsIgnoreCase(expectedTitle)){
+                Assert.fail("User was failed to see carousel title in main title.");
+            }
+        }
+    }
+
+
+    @Then("^User should be able to see browse page$")
+    public void userShouldBeAbleToSeeBrowsePage() {
+        try {
+            testContext.getObjectManager().getElement("BrowsePage_Search_Input").isDisplayed();
+        } catch (Exception e) {
+            Assert.fail("User Failed to navigate browse page.", e.fillInStackTrace());
+        }
+    }
+
+    @When("^User remove filter if any already set$")
+    public void userRemoveFilterIfAlreadySet() {
+        try {
+            if(testContext.getObjectManager().getElement("BrowsePage_ClearAll_Span").isDisplayed())
+                testContext.getObjectManager().getElement("BrowsePage_ClearAll_Span").click();
+
+        } catch (Exception e) {
+            //do nothing as it is an optional check
+        }
+
+    }
+
+    @And("^User set publication year as \"([^\"]*)\"$")
+    public void userSetPublicationYearAs(String arg0) throws Throwable {
+
+    }
+
+    @Then("^User validates search results for below texts$")
+    public void userValidatesSearchResultsForBelowTexts(DataTable dataTable) {
+
+    }
+
+    @Then("^User set publication year as \"([^\"]*)\" and validates search results for below texts$")
+    public void userSetPublicationYearAsAndValidatesSearchResultsForBelowTexts(String arg0, DataTable dataTable) throws Throwable {
+         try {
+            List<List<String>> data = dataTable.raw();
+            for (List<String> searchQuery : data){
+                if(testContext.getObjectManager().getElement("BrowsePage_ClearAll_Span").isDisplayed())
+                    testContext.getObjectManager().getElement("BrowsePage_ClearAll_Span").click();
+                Thread.sleep(1000);
+                testContext.getObjectManager().getElement("BrowsePage_PublicationYear_Input",arg0).click();
+                Thread.sleep(500);
+                testContext.getObjectManager().getElement("BrowsePage_Search_Input").clear();
+                testContext.getObjectManager().getElement("BrowsePage_Search_Input").sendKeys(searchQuery.get(0));
+                testContext.getObjectManager().getElement("BrowsePage_Search_Input").sendKeys(Keys.ENTER);
+                Thread.sleep(1000);
+                List<WebElement> searchResults = testContext.getObjectManager().getElements("BrowsePage_Search_Result");
+                for (WebElement searchResult: searchResults ) {
+
+                    String actualSerachResult = searchResult.getText();
+                    if(!actualSerachResult.contains(searchQuery.get(0))){
+                        Reporter.addStepLog(("1 or more than 1 Search results are not matching with the search query for:"+searchQuery.get(0)));
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            //do nothing as it is an optional check
+        }
+    }
+}
 

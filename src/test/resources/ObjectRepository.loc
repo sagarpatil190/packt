@@ -3,4 +3,11 @@ HomePage_Browse_Menu:xpath=//*[@id='nav-browse']/span
 HomePage_Browse_Menu_Categories:xpath=//*[@id='nav-browse']/ul/li
 HomePage_Browse_Menu_Category:xpath=//*[@id='nav-browse']/ul/li[%s]/a
 HomePage_Browse_Menu_Products:xpath=//*[@id='nav-browse']/ul/li//ul/li
+HomePage_Browse_Menu_ViewAllBooks:xpath=//*[@id="nav-browse"]//a[text()=" View all Books > "]
 Validate_Category_Text:xpath=//span[@class='badge badge-secondary']
+HomePage_Main_Title_Text:xpath=//*[@id="root"]//h2[@class="text-white"]
+HomePage_Carousel_Title_Text:xpath=//*[@aria-hidden="false" and @class="slick-slide slick-active"]//h5[@class="justify-content-end text-white mt-4 title-name"]
+BrowsePage_Search_Input:css=#search-input
+BrowsePage_Search_Result:css=div.search-hit__body-right > h2
+BrowsePage_PublicationYear_Input:xpath=//input[@id=%s]
+BrowsePage_ClearAll_Span:xpath=//span[@class='badge badge-primary']

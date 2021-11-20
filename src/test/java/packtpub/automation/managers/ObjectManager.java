@@ -51,7 +51,7 @@ public class ObjectManager {
         } catch (Exception e) {
             throw new RuntimeException("Locators are not in expected format- [LocatorName]:[LocatorType]=[LocatorValue] or either it is not added in object repository.");
         }
-        WebDriverWait wait=new WebDriverWait(driver, 60);
+        WebDriverWait wait=new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.presenceOfElementLocated(by(locatorType,locatorValue)));
         return driver.findElement(by(locatorType,locatorValue));
     }
